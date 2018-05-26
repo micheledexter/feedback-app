@@ -6,7 +6,9 @@ const feedback = require('./routes/feedback.router');
 
 /** ---------- MIDDLEWARE ---------- **/
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(express.static('build'));
 
 /** ---------- EXPRESS ROUTES ---------- **/

@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 50px;
   padding: 20px;
   color: white;
 }
@@ -23,6 +23,34 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.next-link,
+.previous-link {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  position: absolute;
+}
+
+svg {
+  display: block;
+  margin-top: 9px;
+}
+
+input[type="number"] {
+  font-size: 3em;
+  width: 1em;
+  text-align: center;
+}
+
+.send-feedback {
+  color: white;
+  margin-top: 0px;
 }
