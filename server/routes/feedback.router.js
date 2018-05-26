@@ -28,9 +28,9 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     const feedbackId = req.params.id;
-    const flagged = req.body.flagged;
+    const setFlag = req.body.setStatus;
     pool.query(`UPDATE "feedback" SET "flagged" = $1 WHERE "id" = $2;`, [
-        flagged, feedbackId
+        setFlag, feedbackId
     ]).then(response => {
         res.sendStatus(200);
     }).catch(error => {

@@ -102,6 +102,10 @@ div.Paper {
   background-color: white;
 }
 
+button.delete-entry {
+  background-color: #fdd;
+}
+
 .delete-entry svg {
   display: block;
   margin: 0px;
@@ -110,4 +114,13 @@ div.Paper {
 .btn svg {
   display: block;
   margin: 0px;
+}
+
+button svg {
+  display: block;
+  margin: 0px;
+}
+
+tr.flagged-row td {
+  background-color: lightcoral;
 }

@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Delete from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Flag from '@material-ui/icons/Flag';
 import { connect } from 'react-redux';
 
 const mapReduxStateToProps = (reduxState) => (
@@ -51,6 +52,20 @@ class Admin extends Component {
     this.getFeedbackResults();
   }
 
+  checkFlag = flag => {
+    if (flag) return 'flagged-row';
+    return 'normal-row';
+  }
+
+  toggleFlag = (id, flagStatus) => {
+    axios.put(`/api/feedback/${id}`, {setStatus: !flagStatus}).then(response => {
+      this.getFeedbackResults();
+    }).catch(error => {
+      alert('Error trying to toggle the flag status');
+      console.log(`ERROR trying to PUT /api/feedback/:id: ${error}`);
+    });
+  }
+
   render() {
     return (
       <div className="Admin">
@@ -63,16 +78,18 @@ class Admin extends Component {
                 <TableCell>Comprehension</TableCell>
                 <TableCell>Support</TableCell>
                 <TableCell>Comments</TableCell>
+                <TableCell>Flag</TableCell>
                 <TableCell>Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody className="TableBody">
-              {this.state.feedbackList.map((entry, i) =>
-                <TableRow key={i}>
+              {this.state.feedbackList.sort((a, b) => (a.id - b.id)).map((entry, i) => 
+                <TableRow id={i} key={i} hover={true} className={this.checkFlag(entry.flagged)}>
                   <TableCell>{entry.feeling}</TableCell>
                   <TableCell>{entry.understanding}</TableCell>
                   <TableCell>{entry.support}</TableCell>
                   <TableCell>{entry.comments}</TableCell>
+                  <TableCell><Button className="flag-entry" variant="fab" mini onClick={() => this.toggleFlag(entry.id, entry.flagged)}><Flag color="secondary" /></Button></TableCell>
                   <TableCell><Button className="delete-entry" variant="fab" mini onClick={() => this.deleteEntry(entry.id)}><Delete color="error" /></Button></TableCell>
                 </TableRow>
               )}
