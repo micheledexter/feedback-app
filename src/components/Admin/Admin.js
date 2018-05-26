@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Delete from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 
 const mapReduxStateToProps = (reduxState) => (
@@ -53,28 +54,31 @@ class Admin extends Component {
   render() {
     return (
       <div className="Admin">
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Feeling</TableCell>
-              <TableCell>Comprehension</TableCell>
-              <TableCell>Support</TableCell>
-              <TableCell>Comments</TableCell>
-              <TableCell>Delete</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.state.feedbackList.map((entry, i) =>
-              <TableRow key={i}>
-                <TableCell>{entry.feeling}</TableCell>
-                <TableCell>{entry.understanding}</TableCell>
-                <TableCell>{entry.support}</TableCell>
-                <TableCell>{entry.comments}</TableCell>
-                <TableCell><Button variant="fab" mini onClick={() => this.deleteEntry(entry.id)}><Delete color="error" /></Button></TableCell>
+        <br />
+        <Paper className="table-view">
+          <Table>
+            <TableHead className="TableHead">
+              <TableRow>
+                <TableCell>Feeling</TableCell>
+                <TableCell>Comprehension</TableCell>
+                <TableCell>Support</TableCell>
+                <TableCell>Comments</TableCell>
+                <TableCell>Delete</TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody className="TableBody">
+              {this.state.feedbackList.map((entry, i) =>
+                <TableRow key={i}>
+                  <TableCell>{entry.feeling}</TableCell>
+                  <TableCell>{entry.understanding}</TableCell>
+                  <TableCell>{entry.support}</TableCell>
+                  <TableCell>{entry.comments}</TableCell>
+                  <TableCell><Button className="delete-entry" variant="fab" mini onClick={() => this.deleteEntry(entry.id)}><Delete color="error" /></Button></TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </Paper>
       </div>
     )
   }

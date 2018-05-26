@@ -6,6 +6,8 @@ import ArrowForward from '@material-ui/icons/ArrowForward';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const mapReduxStateToProps = (reduxState) => (
   { reduxState }
@@ -78,32 +80,38 @@ class Feeling extends Component {
       <div className="Feeling">
         <ProgressBar />
         <br />
-        <p>How are you feeling today? (1 = very poorly, 5 = very well)</p>
-        <Input
-          className="rating FeelingRating"
-          type="number"
-          onChange={this.handleChangeFeeling}
-          value={this.state.feelingText}
-          required />
-        <br />
-        <Button
-          variant="raised"
-          color="secondary"
-          className="btn btn-save"
-          onClick={this.saveFeelingEntry}
-          disabled={this.state.savedChanges}>
-          Save
+        <Paper className="Paper" elevation={4}>
+          <Typography variant="headline" component="h3">
+            How are you feeling today? (1 = very poorly, 5 = very well)
+          </Typography>
+          <div className="response-input">
+          <Input
+            className="rating FeelingRating"
+            type="number"
+            onChange={this.handleChangeFeeling}
+            value={this.state.feelingText}
+            required />
+          <br />
+          <Button
+            variant="raised"
+            color="secondary"
+            className="btn btn-save"
+            onClick={this.saveFeelingEntry}
+            disabled={this.state.savedChanges}>
+            Save
         </Button>&nbsp;
         <Button
-          variant="fab"
-          mini
-          color="primary"
-          className="btn btn-next"
-          disabled={this.state.disableContinue}>
-          <Link className="next-link" to="/2">
-            <ArrowForward className="arrow-right" />
-          </Link>
-        </Button>
+            variant="fab"
+            mini
+            color="primary"
+            className="btn btn-next"
+            disabled={this.state.disableContinue}>
+            <Link className="next-link" to="/2">
+              <ArrowForward className="arrow-right" />
+            </Link>
+          </Button>
+          </div>
+        </Paper>
       </div >
     );
   }

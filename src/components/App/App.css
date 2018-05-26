@@ -46,11 +46,68 @@ svg {
 
 input[type="number"] {
   font-size: 3em;
-  width: 1em;
+  width: 100%;
   text-align: center;
+}
+
+.CommentsBox {
+  width: 100%;
+  text-align: left;
 }
 
 .send-feedback {
   color: white;
   margin-top: 0px;
+}
+.table-view {
+  display: inline-block;
+}
+
+div.Paper {
+  display: inline-block;
+  padding: 3em;
+  background-color: aliceblue;
+  width: 30em;
+}
+
+.response-input {
+  background-color: white;
+  display: inline-block;
+  width: 20em;
+  padding: 1em;
+}
+.arrow-left, .arrow-right, .send-feedback {
+  padding: auto;
+}
+
+.restart {
+  text-decoration: none;
+}
+
+.TableHead {
+  background-color: gray;
+}
+
+.TableHead th {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: azure;
+}
+
+.TableBody tr:nth-child(even) {
+  background-color: aliceblue;
+}
+
+.TableBody tr:nth-child(odd) {
+  background-color: white;
+}
+
+.delete-entry svg {
+  display: block;
+  margin: 0px;
+}
+
+.btn svg {
+  display: block;
+  margin: 0px;
 }

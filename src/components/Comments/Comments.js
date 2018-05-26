@@ -7,6 +7,8 @@ import Send from '@material-ui/icons/Send';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const mapReduxStateToProps = (reduxState) => (
   { reduxState }
@@ -58,6 +60,7 @@ class Comments extends Component {
       disabled: false,
     }
     this.setState({
+      savedChanges: updated.saved,
       disableContinue: updated.disabled,
     });
   }
@@ -83,42 +86,48 @@ class Comments extends Component {
       <div className="Comments">
         <ProgressBar />
         <br />
-        <p>Any comments you want to leave?</p>
-        <TextField
-          className="rating CommentsBox"
-          multiline
-          rows="3"
-          onChange={this.handleChangeComments}
-          value={this.state.commentsText}
-          required />
-        <br />
-        <Button
-          variant="fab"
-          mini
-          color="primary"
-          className="btn btn-previous">
-          <Link className="previous-link" to="/3">
-            <ArrowBack className="arrow-left" />
-          </Link>
-        </Button>&nbsp;
-        <Button
-          variant="raised"
-          color="secondary"
-          className="btn btn-save"
-          onClick={this.saveCommentsEntry}
-          disabled={this.state.savedChanges}>
-          Save
-        </Button>&nbsp;
-        <Button
-          variant="fab"
-          mini
-          color="primary"
-          className="btn btn-next"
-          disabled={this.state.disableContinue}>
-          <Link className="submit-link" to="/5">
-            <Send onClick={this.submitFeedback} className="send-feedback" />
-          </Link>
-        </Button>
+        <Paper className="Paper" elevation={4}>
+          <Typography variant="headline" component="h3">
+            Are there any comments you would like to leave?
+            </Typography>
+          <div className="response-input">
+            <TextField
+              className="rating CommentsBox"
+              multiline
+              rows="3"
+              onChange={this.handleChangeComments}
+              value={this.state.commentsText}
+              required />
+            <br />
+            <Button
+              variant="fab"
+              mini
+              color="primary"
+              className="btn btn-previous">
+              <Link className="previous-link" to="/3">
+                <ArrowBack className="arrow-left" />
+              </Link>
+            </Button>&nbsp;
+            <Button
+              variant="raised"
+              color="secondary"
+              className="btn btn-save"
+              onClick={this.saveCommentsEntry}
+              disabled={this.state.savedChanges}>
+              Save
+            </Button>&nbsp;
+            <Button
+              variant="fab"
+              mini
+              color="primary"
+              className="btn btn-send"
+              disabled={this.state.disableContinue}>
+              <Link className="submit-link" to="/5">
+                <Send onClick={this.submitFeedback} className="send-feedback" />
+              </Link>
+            </Button>
+          </div>
+        </Paper>
       </div>
     );
   }

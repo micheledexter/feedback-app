@@ -7,6 +7,8 @@ import ArrowForward from '@material-ui/icons/ArrowForward';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const mapReduxStateToProps = (reduxState) => (
   { reduxState }
@@ -79,41 +81,47 @@ class Understanding extends Component {
       <div className="Understanding">
         <ProgressBar />
         <br />
-        <p>How well are you understanding the content? (1 = very poorly, 5 = very well)</p>
-        <Input
-          className="rating UnderstandingRating"
-          type="number"
-          onChange={this.handleChangeUnderstanding}
-          value={this.state.understandingText}
-          required />
-        <br />
+        <Paper className="Paper" elevation={4}>
+          <Typography variant="headline" component="h3">
+            How well are you understanding the content? (1 = very poorly, 5 = very well)
+          </Typography>
+          <div className="response-input">
+          <Input
+            className="rating UnderstandingRating"
+            type="number"
+            onChange={this.handleChangeUnderstanding}
+            value={this.state.understandingText}
+            required />
+          <br />
+          <Button
+            variant="fab"
+            mini
+            color="primary"
+            className="btn btn-previous">
+            <Link className="previous-link" to="/">
+              <ArrowBack className="arrow-left" />
+            </Link>
+          </Button>&nbsp;
         <Button
-          variant="fab"
-          mini
-          color="primary"
-          className="btn btn-previous">
-          <Link className="previous-link" to="/">
-            <ArrowBack className="arrow-left" />
-          </Link>
+            variant="raised"
+            color="secondary"
+            className="btn btn-save"
+            onClick={this.saveUnderstandingEntry}
+            disabled={this.state.savedChanges}>
+            Save
         </Button>&nbsp;
         <Button
-          variant="raised"
-          color="secondary"
-          className="btn btn-save"
-          onClick={this.saveUnderstandingEntry}
-          disabled={this.state.savedChanges}>
-          Save
-        </Button>&nbsp;
-        <Button
-          variant="fab"
-          mini
-          color="primary"
-          className="btn btn-next"
-          disabled={this.state.disableContinue}>
-          <Link className="next-link" to="/3">
-            <ArrowForward className="arrow-right" />
-          </Link>
-        </Button>
+            variant="fab"
+            mini
+            color="primary"
+            className="btn btn-next"
+            disabled={this.state.disableContinue}>
+            <Link className="next-link" to="/3">
+              <ArrowForward className="arrow-right" />
+            </Link>
+          </Button>
+          </div>
+        </Paper>
       </div>
     );
   }

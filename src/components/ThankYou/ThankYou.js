@@ -4,6 +4,9 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ProgressBar from '../ProgressBar/ProgressBar';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const mapReduxStateToProps = (reduxState) => (
   { reduxState }
@@ -36,16 +39,29 @@ class ThankYou extends Component {
   render() {
     return (
       <div className="ThankYou">
-        <h1 hidden={this.state.showSuccess}>Thank You!</h1>
-        <h1 hidden={this.state.showFailure}>Oops! It looks like something went wrong!</h1>
-        <Link className="restart" to="/">
-          <Button
-            variant="raised"
-            color="primary"
-            className="btn btn-restart">
+        <ProgressBar />
+        <br />
+        <Paper className="Paper" elevation={4}>
+          <Typography variant="headline" component="h1">
+            <span hidden={this.state.showSuccess}>
+              Thank You!
+            </span>
+          </Typography>
+          <Typography variant="headline" component="h1">
+            <span hidden={this.state.showFailure}>
+              Oops! It looks like something went wrong!
+            </span>
+          </Typography>
+          <br />
+          <Link className="restart" to="/">
+            <Button
+              variant="raised"
+              color="primary"
+              className="btn btn-restart">
               Leave New Feedback
           </Button>
-        </Link>
+          </Link>
+        </Paper>
       </div>
     );
   }

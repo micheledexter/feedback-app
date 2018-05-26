@@ -26,6 +26,8 @@ const formEntry = (state = blankForm, action) => {
 const progressBar = (state = 0, action) => {
   if (action.type === 'SET_PROGRESS') {
     return action.payload;
+  } else if (action.type === 'CLEAR_ALL') {
+    return 0;
   }
   return state;
 }
