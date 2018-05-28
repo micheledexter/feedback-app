@@ -15,6 +15,21 @@ class App extends Component {
               <Route exact path="/" render={() => (<Redirect to="/user/1" />)} />
               <Route path="/user" component={UserClient} />
               <Route path="/admin" component={Admin} />
+              <Route exact path="/1" render={() => (
+                <Redirect to="/user/1" />
+              )} />
+              <Route exact path="/2" render={() => (
+                <Redirect to="/user/2" />
+              )} />
+              <Route exact path="/3" render={() => (
+                <Redirect to="/user/3" />
+              )} />
+              <Route exact path="/4" render={() => (
+                <Redirect to="/user/4" />
+              )} />
+              <Route exact path="/5" render={() => (
+                <Redirect to="/user/5" />
+              )} />
               <Route render={() => (<h1>ERROR 404: Page not found</h1>)} />
             </Switch>
           </div>

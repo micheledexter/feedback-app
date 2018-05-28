@@ -25,29 +25,29 @@ const UserClient = props => (
             props.reduxState.formEntry.feeling ? (
               <Understanding />
             ) : (
-              <Redirect to="/user/1" />
-            )
+                <Redirect to="/user/1" />
+              )
           )} />
           <Route exact path="/user/3" render={() => (
             props.reduxState.formEntry.understanding ? (
               <Support />
             ) : (
-              <Redirect to="/user/2" />
-            )
+                <Redirect to="/user/2" />
+              )
           )} />
           <Route exact path="/user/4" render={() => (
             props.reduxState.formEntry.support ? (
               <Comments />
             ) : (
-              <Redirect to="/user/3" />
-            )
+                <Redirect to="/user/3" />
+              )
           )} />
           <Route exact path="/user/5" render={() => (
             props.reduxState.formEntry.comments ? (
               <ThankYou />
             ) : (
-              <Redirect to="/user/4" />
-            )
+                <Redirect to="/user/4" />
+              )
           )} />
           <Route render={() => (<h1>ERROR 404: Page not found</h1>)} />
         </Switch>
