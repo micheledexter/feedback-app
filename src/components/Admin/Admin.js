@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../App/App.css';
+import AdminHeader from './AdminHeader/AdminHeader';
 import axios from 'axios';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,11 +11,6 @@ import Delete from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Flag from '@material-ui/icons/Flag';
-import { connect } from 'react-redux';
-
-const mapReduxStateToProps = (reduxState) => (
-  { reduxState }
-);
 
 class Admin extends Component {
   constructor(props) {
@@ -24,9 +20,10 @@ class Admin extends Component {
     };
   }
 
+  // Send a request to the server for table entries
   getFeedbackResults = () => {
     axios.get('/api/feedback').then(response => {
-      this.setState({
+      this.setState({ // Set the local state to the array of entries
         feedbackList: response.data
       });
     }).catch(error => {
@@ -35,12 +32,13 @@ class Admin extends Component {
     });
   }
 
-  deleteEntry = (id) => {
+  // Send a request to server to delete entry based on user confirmation
+  deleteEntry = id => {
     let confirmation = window.confirm('Are you certain you want to delete this? There\'s no going back! Press \'OK\' to continue');
-    if (confirmation) {
+    if (confirmation) { // If they confirmed the delete, send the request
       const deletion = `/api/feedback/${id}`;
       axios.delete(deletion).then(response => {
-        this.getFeedbackResults();
+        this.getFeedbackResults(); // Repopulate the table
       }).catch(error => {
         alert('Error trying to delete entry');
         console.log(`ERROR trying to DELETE /api/feedback/:id: ${error}`);
@@ -48,18 +46,21 @@ class Admin extends Component {
     }
   }
 
+  // Load the table entries on component mount
   componentDidMount = () => {
     this.getFeedbackResults();
   }
 
+  // Set entry flag status in the TableRow
   checkFlag = flag => {
     if (flag) return 'flagged-row';
     return 'normal-row';
   }
 
+  // Send a flag status to the server using a toggle
   toggleFlag = (id, flagStatus) => {
-    axios.put(`/api/feedback/${id}`, {setStatus: !flagStatus}).then(response => {
-      this.getFeedbackResults();
+    axios.put(`/api/feedback/${id}`, { setStatus: !flagStatus }).then(response => {
+      this.getFeedbackResults(); // Repopulate the table
     }).catch(error => {
       alert('Error trying to toggle the flag status');
       console.log(`ERROR trying to PUT /api/feedback/:id: ${error}`);
@@ -69,8 +70,9 @@ class Admin extends Component {
   render() {
     return (
       <div className="Admin">
+        <AdminHeader />
         <br />
-        <Paper className="table-view">
+        <Paper className="table-view"> {/* Use Paper for styling */}
           <Table>
             <TableHead className="TableHead">
               <TableRow>
@@ -83,14 +85,33 @@ class Admin extends Component {
               </TableRow>
             </TableHead>
             <TableBody className="TableBody">
-              {this.state.feedbackList.sort((a, b) => (a.id - b.id)).map((entry, i) => 
-                <TableRow id={i} key={i} hover={true} className={this.checkFlag(entry.flagged)}>
+              {/* Map out the table entries in the body by row */}
+              {this.state.feedbackList.sort((currentItem, nextItem) => (currentItem.id - nextItem.id)).map((entry, i) =>
+                <TableRow key={i} hover={true} className={this.checkFlag(entry.flagged)}>
                   <TableCell>{entry.feeling}</TableCell>
                   <TableCell>{entry.understanding}</TableCell>
                   <TableCell>{entry.support}</TableCell>
                   <TableCell>{entry.comments}</TableCell>
-                  <TableCell><Button className="flag-entry" variant="fab" mini onClick={() => this.toggleFlag(entry.id, entry.flagged)}><Flag color="secondary" /></Button></TableCell>
-                  <TableCell><Button className="delete-entry" variant="fab" mini onClick={() => this.deleteEntry(entry.id)}><Delete color="error" /></Button></TableCell>
+                  <TableCell>
+                    {/* Create a button for toggling a flagged entry */}
+                    <Button
+                      className="flag-entry"
+                      variant="fab"
+                      mini
+                      onClick={() => this.toggleFlag(entry.id, entry.flagged)}>
+                      <Flag color="secondary" />
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    {/* Create a button for deleting an entry */}
+                    <Button
+                      className="delete-entry"
+                      variant="fab"
+                      mini
+                      onClick={() => this.deleteEntry(entry.id)}>
+                      <Delete color="error" />
+                    </Button>
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -101,4 +122,5 @@ class Admin extends Component {
   }
 }
 
-export default connect(mapReduxStateToProps)(Admin);
+// Just export the Admin component, no need to even connect.
+export default Admin;
