@@ -10,11 +10,12 @@ class App extends Component {
       <div className="App">
         <Router>
           <div className="Router">
-            {/* Use client-side routing */}
+            {/* Use switch-based client-side routing */}
             <Switch>
               <Route exact path="/" render={() => (<Redirect to="/user/1" />)} />
               <Route path="/user" component={UserClient} />
               <Route path="/admin" component={Admin} />
+              {/* Automatically redirect in case of user mistypes */}
               <Route exact path="/1" render={() => (
                 <Redirect to="/user/1" />
               )} />
@@ -30,6 +31,7 @@ class App extends Component {
               <Route exact path="/5" render={() => (
                 <Redirect to="/user/5" />
               )} />
+              {/* Catch any mistyped pages */}
               <Route render={() => (<h1>ERROR 404: Page not found</h1>)} />
             </Switch>
           </div>

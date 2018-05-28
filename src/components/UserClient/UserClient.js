@@ -10,17 +10,21 @@ import ThankYou from './ThankYou/ThankYou';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+// No need for local state, so don't use a class
 const mapReduxStateToProps = (reduxState) => ({ reduxState });
 
 const UserClient = props => (
   <div className="UserClient">
+    {/* Load the user header and progress bar for all pages */}
     <UserHeader />
     <ProgressBar />
+    {/* Create a switch-based router for user client side */}
     <Router>
       <div className="Router">
         <Switch>
           <Route exact path="/user" render={() => (<Redirect to="/user/1" />)} />
           <Route exact path="/user/1" component={Feeling} />
+          {/* After feeling card, check to make sure they don't skip */}
           <Route exact path="/user/2" render={() => (
             props.reduxState.formEntry.feeling ? (
               <Understanding />
@@ -49,6 +53,7 @@ const UserClient = props => (
                 <Redirect to="/user/4" />
               )
           )} />
+          {/* Catch any pages that aren't available */}
           <Route render={() => (<h1>ERROR 404: Page not found</h1>)} />
         </Switch>
       </div>
@@ -56,4 +61,5 @@ const UserClient = props => (
   </div>
 );
 
+// Include a connection to redux in both directions in export
 export default connect(mapReduxStateToProps)(UserClient);

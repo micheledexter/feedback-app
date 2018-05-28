@@ -21,6 +21,11 @@ class ThankYou extends Component {
     }
   }
 
+  /* Reset the form:
+  This function resets all of the reducers, and because of the way that the
+  router works, they aren't allowed to have this component loaded if they
+  have an empty form, and it will redirect them to the 'feeling' component.
+  */
   resetEverything = () => {
     this.props.dispatch({ type: 'CLEAR_ALL' });
   }
@@ -29,18 +34,18 @@ class ThankYou extends Component {
   componentDidMount = () => {
     const toggle = false;
     if (this.props.reduxState.submission) {
-      this.setState({
+      this.setState({ // Don't allow double-submissions
         hideFailure: toggle,
       });
     } else {
       axios.post('/api/feedback', this.props.reduxState.formEntry).then(response => {
-        this.setState({ // If it's 
+        this.setState({ // If it succeeded, show "success" message
           hideSuccess: toggle,
         });
-        this.props.dispatch({ type: 'SUBMITTED' });
+        this.props.dispatch({ type: 'SUBMITTED' }); // Only one submission per form
       }).catch(error => {
         console.log(`ERROR trying to POST /api/feedback: ${error}`);
-        this.setState({
+        this.setState({ // If it failed, show "oops" message
           hideFailure: toggle,
         });
       });
@@ -52,17 +57,20 @@ class ThankYou extends Component {
       <div className="ThankYou">
         <br />
         <Paper className="Paper" elevation={4}>
+          {/* Show "success" message if it succeeded */}
           <Typography variant="headline" component="h1">
             <span hidden={this.state.hideSuccess}>
               Thank You!
             </span>
           </Typography>
+          {/* Show "oops" message if it failed or wasn't allowed */}
           <Typography variant="headline" component="h1">
             <span hidden={this.state.hideFailure}>
               Oops! It looks like something went wrong!
             </span>
           </Typography>
           <br />
+          {/* Allow the user to restart feedback process */}
           <Button
             variant="raised"
             color="primary"
