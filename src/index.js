@@ -35,6 +35,8 @@ const progressBar = (state = 0, action) => {
   return state;
 }
 
+// Create 'submission' reducer to keep track of whether or not the user has
+// submitted the form already (to avoid double-submission) or not
 const submission = (state = false, action) => {
   if (action.type === 'SUBMITTED') {
     return true;
